@@ -9,6 +9,36 @@
   <link rel="stylesheet" href="./resources/styles/style.css" />
 </head>
 <body>
-  
+  <div class="quiz-container" id="quiz">
+    <div class="slides" id="slides"></div>
+
+    <!-- PC用ナビ矢印 -->
+    <button class="nav-btn" id="prevBtn">&#8593;</button>
+    <button class="nav-btn" id="nextBtn">&#8595;</button>
+
+    
+
+    <!-- ポップアップ・オーバーレイ -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+      <h2>Quiz Completed!</h2>
+      <p id="scoreText"></p>
+      <img id="badgeImage" src="" alt="Badge">
+      <button class="share-btn" id="shareBtn">Xにシェア</button>
+    </div>
+
+    <!-- リトライボタン -->
+    <button class="retry-btn" id="retryBtn">もう一度挑戦</button>
+    <!-- スクロール矢印 -->
+    <div class="down-arrow" id="downArrow">⬇️</div>
+  </div>
+<div class="footer">
+      <a href="https://09969.jp/products/koshikibrewery-the-fast-from-scratch" target="_blank">ECサイト</a>
+      <a href="https://x.com/vtmapida" target="_blank">X</a>
+      <a href="https://www.instagram.com/koshiki_brewery/" target="_blank">Instagram</a>
+      <a href="https://09969.jp/pages/koshiki-brewery" target="_blank">Home</a>
+    </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
