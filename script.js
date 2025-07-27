@@ -1,16 +1,16 @@
 // クイズデータ
 const quizData = [
   {
-    question: "ビールの主原料として正しいものは？",
-    options: ["大麦麦芽・ホップ・酵母・水", "小麦・砂糖・酵母・水", "米・ホップ・酵母・水", "大豆・ホップ・酵母・水"],
-    correct: 0,
-    explanation: "ビールの主原料は大麦麦芽、ホップ、酵母、水の4つです。これらがビールの基本的な味わいを作り出します。"
+    question: "こしきブリュワリーがある県はどこ？",
+    options: ["北海道", "東京都", "鹿児島県", "兵庫県"],
+    correct: 2,
+    explanation: "こしきブリュワリーは鹿児島県の離島「甑島」から発信しています"
   },
   {
-    question: "IPAとは何の略？",
-    options: ["Indian Pale Ale", "International Pale Ale", "Imperial Pale Ale", "Italian Pale Ale"],
+    question: "甑島の人口は何人くらいでしょう？",
+    options: ["4000人", "1万人", "10万人", "50万人"],
     correct: 0,
-    explanation: "IPAは「India Pale Ale」の略です。18世紀にイギリスからインドに輸送する際、防腐効果を高めるためホップを多く使ったのが始まりです。"
+    explanation: "2025年では約4000人が暮らしています。主に水産業が盛んで、自然環境豊かな島です"
   },
   {
     question: "ラガービールの特徴は？",
