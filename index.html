@@ -1,48 +1,81 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
-   <meta http-eqive="X-UA-Compatible" content="IE=edge" />
+  <meta http-eqive="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>こしブリ検定</title>
   <link rel="stylesheet" href="./resources/styles/destyle.css" />
   <link rel="stylesheet" href="./resources/styles/style.css" />
 </head>
+
 <body>
-  <div class="quiz-container" id="quiz">
-    <div class="slides" id="slides"></div>
 
-    <!-- PC用ナビ矢印 -->
-    <button class="nav-btn" id="prevBtn">&#8593;</button>
-    <button class="nav-btn" id="nextBtn">&#8595;</button>
-
-    
-
-    <!-- ポップアップ・オーバーレイ -->
-    <div class="overlay" id="overlay"></div>
-    <div class="popup" id="popup">
-      <h2>Quiz Completed!</h2>
-      <p id="scoreText"></p>
-      <img id="badgeImage" src="" alt="Badge">
-      <button class="share-btn" id="shareBtn">Xにシェア</button>
+  <div class="container">
+    <!-- PC用サイドバー -->
+    <div class="sidebar">
+      <a href="#" class="sidebar-icon"
+        onclick="openLink('ec')">🛒</a>
+      <a href="#" class="sidebar-icon" onclick="openLink('twitter')">𝕏</a>
+      <a href="#" class="sidebar-icon" onclick="openLink('instagram')">📷</a>
+      <a href="#" class="sidebar-icon" onclick="openLink('homepage')">🏠</a>
     </div>
 
-    <!-- リトライボタン -->
-    <button class="retry-btn" id="retryBtn">もう一度挑戦</button>
-    <!-- スクロール矢印 -->
-    <div class="down-arrow" id="downArrow">⬇️</div>
+    <div class="main-content">
+      <!-- PC用ナビゲーションボタン -->
+      <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn" onclick="previousSlide()">↑</button>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">↓</button>
+      </div>
+
+      <div class="quiz-container" id="quizContainer">
+        <!-- 開始画面 -->
+        <div class="slide active" id="slide-start">
+          <div class="header">
+            <div class="question-number">こしきブリュワリー</div>
+            <div style="font-size: 14px; color: #666;">クラフトビール診断 - 初級編</div>
+          </div>
+          <div class="quiz-content">
+            <div class="beer-icon">🍺</div>
+            <div class="question">クラフトビールの知識を<br>チェックしましょう！</div>
+            <div style="text-align: center; color: #666; margin-bottom: 20px;">
+              全10問 / 各10点 / 制限時間なし
+            </div>
+            <button class="confirm-btn active" onclick="startQuiz()">スタート</button>
+          </div>
+        </div>
+
+        <!-- クイズスライドは動的に生成 -->
+      </div>
+    </div>
   </div>
-<div class="footer">
-      <a class="footer-icon" href="https://09969.jp/products/koshikibrewery-the-fast-from-scratch" target="_blank">
-        <img src="resources/images/19295.png" alt="ECサイト"></a>
-      <a class="footer-icon" href="https://x.com/vtmapida" target="_blank">
-<img src="resources/images/logo-white.png" alt="X"></a>
-      <a class="footer-icon" href="https://www.instagram.com/koshiki_brewery/" target="_blank">
-        <img src="resources/images/IMG_4657.png" alt="インスタグラム"></a>
-      <a class="footer-icon" href="https://09969.jp/pages/koshiki-brewery" target="_blank">
-        <img src="resources/images/23226468.png" alt="ホームページ"></a>
+
+  <!-- モバイル用フッター -->
+  <div class="footer">
+    <a href="#" class="footer-icon"
+      onclick="openLink('ec')">🛒</a>
+    <a href="#" class="footer-icon" onclick="openLink('twitter')">𝕏</a>
+    <a href="#" class="footer-icon" onclick="openLink('instagram')">📷</a>
+    <a href="#" class="footer-icon" onclick="openLink('homepage')">🏠</a>
+  </div>
+
+  <!-- 完了ポップアップ -->
+  <div class="completion-popup" id="completionPopup">
+    <div class="popup-content">
+      <div class="badge-image" id="badgeImage">🏆</div>
+      <div class="final-score" id="finalScore">0点</div>
+      <div class="completion-date" id="completionDate"></div>
+      <div style="margin: 20px 0; font-weight: bold; color: #333;">
+        診断完了おめでとうございます！
+      </div>
+      <button class="share-btn" onclick="shareToTwitter()">𝕏で共有</button>
+      <button class="share-btn" style="background: #28a745;" onclick="restartQuiz()"> リトライ</button>
+      <button class="close-btn" onclick="closePopup()">閉じる</button>
     </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>

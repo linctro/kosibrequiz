@@ -1,134 +1,388 @@
-const questions = [
-      { question: 'この式の答えは何？', expression: '432 + 299',
-        options: [681, 684, 758, 731], answer: 681,
-        explanation: '432 + 299 = 731 → 731ではなく681が正解。' },
-      { question: '次の答えは？', expression: '123 + 456',
-        options: [579, 580, 577, 578], answer: 579,
-        explanation: '123 + 456 = 579 です。' }
-      // ...全10問
-    ];
-    const badgeImages = {
-      20: 'images/badge20.png',
-      10: 'images/badge10.png',
-      0:  'images/badge0.png'
-      // 実際は 100,90,80... のキーと画像を用意
-    };
-    let current = 0, score = 0, total = questions.length;
-    const slidesEl = document.getElementById('slides');
-    const overlay = document.getElementById('overlay');
-    const popup = document.getElementById('popup');
-    const retryBtn = document.getElementById('retryBtn');
-    const downArrow = document.getElementById('downArrow');
-    const scoreText = document.getElementById('scoreText');
-    const badgeImage = document.getElementById('badgeImage');
-    const shareBtn = document.getElementById('shareBtn');
+// クイズデータ
+const quizData = [
+  {
+    question: "ビールの主原料として正しいものは？",
+    options: ["大麦麦芽・ホップ・酵母・水", "小麦・砂糖・酵母・水", "米・ホップ・酵母・水", "大豆・ホップ・酵母・水"],
+    correct: 0,
+    explanation: "ビールの主原料は大麦麦芽、ホップ、酵母、水の4つです。これらがビールの基本的な味わいを作り出します。"
+  },
+  {
+    question: "IPAとは何の略？",
+    options: ["Indian Pale Ale", "International Pale Ale", "Imperial Pale Ale", "Italian Pale Ale"],
+    correct: 0,
+    explanation: "IPAは「India Pale Ale」の略です。18世紀にイギリスからインドに輸送する際、防腐効果を高めるためホップを多く使ったのが始まりです。"
+  },
+  {
+    question: "ラガービールの特徴は？",
+    options: ["低温で長期間発酵", "高温で短期間発酵", "常温で発酵", "発酵しない"],
+    correct: 0,
+    explanation: "ラガービールは低温（7-13℃）で長期間発酵させるビールです。すっきりとした味わいが特徴的です。"
+  },
+  {
+    question: "ホップの役割として正しくないものは？",
+    options: ["苦味を与える", "香りを与える", "甘味を与える", "防腐効果"],
+    correct: 2,
+    explanation: "ホップは苦味、香り、防腐効果をビールに与えますが、甘味は与えません。甘味は主に麦芽から来ます。"
+  },
+  {
+    question: "スタウトビールの色は？",
+    options: ["黄金色", "琥珀色", "濃い茶色", "黒色"],
+    correct: 3,
+    explanation: "スタウトビールは黒色が特徴的です。ローストした大麦麦芽を使用することで、この深い色合いと香ばしい風味が生まれます。"
+  },
+  {
+    question: "ビールの度数で一般的な範囲は？",
+    options: ["1-3%", "3-12%", "12-20%", "20-40%"],
+    correct: 1,
+    explanation: "ビールのアルコール度数は一般的に3-12%の範囲です。軽いビールで3-4%、強いビールで8-12%程度です。"
+  },
+  {
+    question: "エールビールの発酵温度は？",
+    options: ["0-5℃", "15-25℃", "30-40℃", "50-60℃"],
+    correct: 1,
+    explanation: "エールビールは15-25℃の比較的高い温度で発酵させます。この温度により、フルーティーで複雑な風味が生まれます。"
+  },
+  {
+    question: "ビールの泡の役割として正しくないものは？",
+    options: ["香りを閉じ込める", "酸化を防ぐ", "見た目を美しくする", "アルコール度数を上げる"],
+    correct: 3,
+    explanation: "ビールの泡は香りを閉じ込め、酸化を防ぎ、見た目を美しくしますが、アルコール度数には影響しません。"
+  },
+  {
+    question: "ピルスナーの発祥地は？",
+    options: ["ドイツ", "チェコ", "ベルギー", "イギリス"],
+    correct: 1,
+    explanation: "ピルスナーはチェコのピルゼン市で生まれました。1842年に誕生し、現在世界中で愛されているビールスタイルです。"
+  },
+  {
+    question: "クラフトビールの定義に含まれないものは？",
+    options: ["小規模生産", "独立性", "伝統的製法", "大量生産"],
+    correct: 3,
+    explanation: "クラフトビールは小規模生産、独立性、伝統的製法が特徴です。大量生産は大手ビール会社の特徴で、クラフトビールとは対照的です。"
+  }
+];
 
-    function createSlides() {
-      questions.forEach((q, idx) => {
-        const slide = document.createElement('div');
-        slide.className = 'slide';
-        slide.innerHTML = `
-          <div class="question">
-            <h2>Q${idx+1}. ${q.question}</h2>
-            <p>${q.expression}</p>
-          </div>
-          <div class="options">
-            ${q.options.map(v => `<div class="option">${v}</div>`).join('')}
-          </div>
-          <div class="result"></div>
-          <button class="confirm-btn">確定</button>
-          <div class="explanation"></div>
-        `;
-        slidesEl.appendChild(slide);
-      });
+// アプリの状態
+let currentSlide = 0;
+let userAnswers = [];
+let score = 0;
+let startY = 0;
+let isTransitioning = false;
+
+// 初期化
+function init() {
+  generateQuizSlides();
+  setupTouchEvents();
+  updateNavButtons();
+}
+
+// クイズスライドを動的生成
+function generateQuizSlides() {
+  const container = document.getElementById('quizContainer');
+
+  // 各クイズ問題のスライド
+  quizData.forEach((quiz, index) => {
+    const slide = createQuizSlide(quiz, index);
+    container.appendChild(slide);
+
+    const resultSlide = createResultSlide(index);
+    container.appendChild(resultSlide);
+  });
+}
+
+// クイズスライド作成
+function createQuizSlide(quiz, index) {
+  const slide = document.createElement('div');
+  slide.className = 'slide';
+  slide.id = `slide-quiz-${index}`;
+
+  slide.innerHTML = `
+                <div class="header">
+                    <div class="question-number">問題 ${index + 1}</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${((index + 1) / quizData.length) * 100}%"></div>
+                    </div>
+                </div>
+                <div class="quiz-content">
+                    <div class="beer-icon">🍺</div>
+                    <div class="question">${quiz.question}</div>
+                    <div class="options">
+                        ${quiz.options.map((option, optIndex) =>
+    `<div class="option" onclick="selectOption(${index}, ${optIndex})">${option}</div>`
+  ).join('')}
+                    </div>
+                    <button class="confirm-btn" onclick="confirmAnswer(${index})">回答確定</button>
+                </div>
+            `;
+
+  return slide;
+}
+
+// 結果スライド作成
+function createResultSlide(index) {
+  const slide = document.createElement('div');
+  slide.className = 'slide';
+  slide.id = `slide-result-${index}`;
+
+  slide.innerHTML = `
+                <div class="header">
+                    <div class="question-number">問題 ${index + 1} の結果</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${((index + 1) / quizData.length) * 100}%"></div>
+                    </div>
+                </div>
+                <div class="result-content">
+                    <div class="result-icon" id="result-icon-${index}">⭕</div>
+                    <div class="result-text" id="result-text-${index}">正解！</div>
+                    <div class="explanation">${quizData[index].explanation}</div>
+                    ${index === quizData.length - 1 ?
+      '<button class="confirm-btn active" onclick="showCompletionPopup()">結果を見る</button>' :
+      '<div style="color: #666; margin-top: 20px;">下にスワイプして次の問題へ</div>'
     }
+                </div>
+            `;
 
-    function updateSlide() {
-      slidesEl.style.transform = `translateY(-${current*100}%)`;
-      downArrow.style.display = 'none';
+  return slide;
+}
+
+// クイズ開始
+function startQuiz() {
+  goToSlide(1);
+}
+
+// 選択肢選択
+function selectOption(quizIndex, optionIndex) {
+  const slide = document.getElementById(`slide-quiz-${quizIndex}`);
+  const options = slide.querySelectorAll('.option');
+  const confirmBtn = slide.querySelector('.confirm-btn');
+
+  // 選択状態をリセット
+  options.forEach(opt => opt.classList.remove('selected'));
+
+  // 新しい選択を適用
+  options[optionIndex].classList.add('selected');
+  confirmBtn.classList.add('active');
+
+  // 答えを記録
+  userAnswers[quizIndex] = optionIndex;
+}
+
+// 回答確定
+function confirmAnswer(quizIndex) {
+  if (userAnswers[quizIndex] === undefined) return;
+
+  const isCorrect = userAnswers[quizIndex] === quizData[quizIndex].correct;
+  if (isCorrect) score += 10;
+
+  // 結果スライドを更新
+  updateResultSlide(quizIndex, isCorrect);
+
+  // 次のスライド（結果画面）へ
+  goToSlide((quizIndex + 1) * 2);
+}
+
+// 結果スライド更新
+function updateResultSlide(quizIndex, isCorrect) {
+  const resultIcon = document.getElementById(`result-icon-${quizIndex}`);
+  const resultText = document.getElementById(`result-text-${quizIndex}`);
+
+  if (isCorrect) {
+    resultIcon.textContent = '⭕';
+    resultText.textContent = '正解！';
+    resultText.className = 'result-text correct';
+  } else {
+    resultIcon.textContent = '❌';
+    resultText.textContent = '不正解';
+    resultText.className = 'result-text incorrect';
+  }
+}
+
+// スライド移動
+function goToSlide(slideNumber) {
+  if (isTransitioning) return;
+
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+
+  if (slideNumber < 0 || slideNumber >= totalSlides) return;
+
+  isTransitioning = true;
+
+  slides.forEach((slide, index) => {
+    slide.classList.remove('active', 'prev', 'next');
+
+    if (index === slideNumber) {
+      slide.classList.add('active');
+    } else if (index < slideNumber) {
+      slide.classList.add('prev');
+    } else {
+      slide.classList.add('next');
     }
+  });
 
-    function selectOption(el) {
-      const slide = slidesEl.children[current];
-      slide.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
-      el.classList.add('selected');
-      slide.querySelector('.confirm-btn').classList.add('enabled');
+  currentSlide = slideNumber;
+  updateNavButtons();
+
+  setTimeout(() => {
+    isTransitioning = false;
+  }, 500);
+}
+
+// ナビゲーションボタン更新
+function updateNavButtons() {
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const totalSlides = document.querySelectorAll('.slide').length;
+
+  prevBtn.disabled = currentSlide <= 0;
+  nextBtn.disabled = currentSlide >= totalSlides - 1;
+}
+
+// 前のスライド
+function previousSlide() {
+  if (currentSlide > 0) {
+    goToSlide(currentSlide - 1);
+  }
+}
+
+// 次のスライド
+function nextSlide() {
+  const totalSlides = document.querySelectorAll('.slide').length;
+  if (currentSlide < totalSlides - 1) {
+    goToSlide(currentSlide + 1);
+  }
+}
+
+// タッチイベント設定
+function setupTouchEvents() {
+  const container = document.getElementById('quizContainer');
+
+  container.addEventListener('touchstart', handleTouchStart, { passive: true });
+  container.addEventListener('touchmove', handleTouchMove, { passive: true });
+  container.addEventListener('touchend', handleTouchEnd, { passive: true });
+}
+
+function handleTouchStart(e) {
+  startY = e.touches[0].clientY;
+}
+
+function handleTouchMove(e) {
+  // スワイプ中の処理（必要に応じて）
+}
+
+function handleTouchEnd(e) {
+  if (!startY) return;
+
+  const endY = e.changedTouches[0].clientY;
+  const diffY = startY - endY;
+
+  // 50px以上のスワイプで判定
+  if (Math.abs(diffY) > 50) {
+    if (diffY > 0) {
+      // 上方向スワイプ（次のスライドへ）
+      nextSlide();
+    } else {
+      // 下方向スワイプ（前のスライドへ）
+      previousSlide();
     }
+  }
 
-    function confirmAnswer() {
-      const slide = slidesEl.children[current];
-      const sel = slide.querySelector('.option.selected');
-      if (!sel) return;
-      const chosen = +sel.textContent;
-      const correct = chosen === questions[current].answer;
-      if (correct) score += 10;
-      slide.querySelector('.result').textContent = correct ? '◯' : '✕';
-      slide.querySelector('.explanation').textContent = questions[current].explanation;
-      slide.querySelector('.confirm-btn').disabled = true;
-      slide.querySelectorAll('.option').forEach(o=>o.style.pointerEvents='none');
+  startY = 0;
+}
 
-      if (current < total - 1) {
-        downArrow.style.display = 'block';
-      } else {
-        setTimeout(showPopup, 500);
-      }
+// 完了ポップアップ表示
+function showCompletionPopup() {
+  const popup = document.getElementById('completionPopup');
+  const finalScore = document.getElementById('finalScore');
+  const completionDate = document.getElementById('completionDate');
+  const badgeImage = document.getElementById('badgeImage');
+
+  finalScore.textContent = `${score}点`;
+
+  const now = new Date();
+  completionDate.textContent = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+  // バッジ画像を点数に応じて変更
+  const badge = getBadgeByScore(score);
+  badgeImage.innerHTML = badge.icon;
+  badgeImage.style.background = badge.color;
+
+  popup.style.display = 'flex';
+}
+
+// 点数に応じたバッジ取得
+function getBadgeByScore(score) {
+  if (score === 100) {
+    return { icon: '🏆', color: 'linear-gradient(135deg, #FFD700, #FFA500)' };
+  } else if (score >= 80) {
+    return { icon: '🥈', color: 'linear-gradient(135deg, #C0C0C0, #A0A0A0)' };
+  } else if (score >= 60) {
+    return { icon: '🥉', color: 'linear-gradient(135deg, #CD7F32, #B8860B)' };
+  } else {
+    return { icon: '📜', color: 'linear-gradient(135deg, #DDD, #BBB)' };
+  }
+}
+
+// X（Twitter）で共有
+function shareToTwitter() {
+  const badge = getBadgeByScore(score);
+  let message = `こしきブリュワリーのクラフトビール診断（初級）で${score}点を獲得しました！${badge.icon}\n\n`;
+
+  if (score === 100) {
+    message += '完璧です！クラフトビールマスター🍺';
+  } else if (score >= 80) {
+    message += 'クラフトビール上級者ですね！🍻';
+  } else if (score >= 60) {
+    message += 'なかなかの知識をお持ちです！🍺';
+  } else {
+    message += 'これからクラフトビールを楽しみましょう！🍻';
+  }
+
+  message += '\n\n#こしきブリュワリー #クラフトビール #ビール診断';
+
+  const url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(message);
+  window.open(url, '_blank');
+}
+
+// ポップアップを閉じる
+function closePopup() {
+  document.getElementById('completionPopup').style.display = 'none';
+}
+
+// リトライ機能
+function restartQuiz() {
+  currentSlide = 0;
+  userAnswers = [];
+  score = 0;
+
+
+  const allOptions = document.querySelectorAll('.option');
+  allOptions.forEach(option => option.classList.remove('selected'));
+
+  const allConfirmBtns = document.querySelectorAll('.conform-btn');
+  allConfirmBtns.forEach(btn => {
+    if (!btn.textContent.includes('スタート')) {
+      btn.classList.remove('active');
     }
+  });
 
-    function showPopup() {
-      overlay.style.display = popup.style.display = 'block';
-      retryBtn.style.display = 'block';
-      scoreText.textContent = `得点: ${score} / ${total*10}`;
-      const key = Object.keys(badgeImages).reverse().find(k=>score>=+k) || '0';
-      badgeImage.src = badgeImages[key];
-    }
+  closePopup();
 
-    function resetQuiz() {
-      overlay.style.display = popup.style.display = retryBtn.style.display = downArrow.style.display = 'none';
-      current = 0; score = 0;
-      Array.from(slidesEl.children).forEach(slide=>{
-        slide.querySelectorAll('.option').forEach(o=>{
-          o.classList.remove('selected');
-          o.style.pointerEvents = 'auto';
-        });
-        const btn = slide.querySelector('.confirm-btn');
-        btn.disabled = false;
-        btn.classList.remove('enabled');
-        slide.querySelector('.result').textContent = '';
-        slide.querySelector('.explanation').textContent = '';
-      });
-      updateSlide();
-    }
+  goToSlide(0);
+}
+// 外部リンク
+function openLink(type) {
+  const links = {
+    ec: 'https://09969.jp/products/koshikibrewery-the-fast-from-scratch',
+    twitter: 'https://x.com/vtmapida',
+    instagram: 'https://www.instagram.com/koshiki_brewery/',
+    homepage: 'https://09969.jp/pages/koshiki-brewery'
+  };
 
-    // イベント
-    slidesEl.addEventListener('click', e=>{
-      if (e.target.classList.contains('option')) selectOption(e.target);
-      if (e.target.classList.contains('confirm-btn') &&
-          e.target.classList.contains('enabled')) confirmAnswer();
-    });
-    shareBtn.addEventListener('click', ()=>{
-      const text = encodeURIComponent(`こしきブリュワリーQuizで${score}点獲得！`);
-      window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
-    });
-    retryBtn.addEventListener('click', resetQuiz);
+  if (links[type]) {
+    window.open(links[type], '_blank');
+  }
+}
 
-    // スワイプ & PCナビ
-    let startY = null, threshold = 50;
-    slidesEl.addEventListener('touchstart', e=> startY = e.touches[0].clientY );
-    slidesEl.addEventListener('touchend', e=>{
-      if (startY===null) return;
-      const dy = e.changedTouches[0].clientY - startY;
-      if (dy < -threshold && current < total-1) current++;
-      if (dy > threshold && current > 0) current--;
-      updateSlide();
-      startY = null;
-    });
-    document.getElementById('prevBtn').addEventListener('click', ()=>{
-      if (current>0) { current--; updateSlide(); }
-    });
-    document.getElementById('nextBtn').addEventListener('click', ()=>{
-      if (current<total-1) { current++; updateSlide(); }
-    });
-
-    // 初期化
-    createSlides();
-    updateSlide();
+// 初期化実行
+window.addEventListener('DOMContentLoaded', init);
