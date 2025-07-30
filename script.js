@@ -27,7 +27,7 @@ const quizData = [
   {
     question: "NFTはこしきブリュワリーの何と紐づいているでしょうか？",
     options: ["島の住民票", "飲み放題パス", "２０００分割された建物パーツ", "ヤギ"],
-    correct: 3,
+    correct: 2,
     explanation: "こしきブリュワリーは工場を建設する段階よりはじまり、基礎、ブロック、土台、壁、屋根etc..とNFTと紐づけて可視化しています。NFTは2000分割されており、所有者はその一部の所有感を体験することができます"
   },
   {
@@ -39,13 +39,13 @@ const quizData = [
   {
     question: "こしきブリュワリーのボトルラベルはどうやって決める？",
     options: ["専門デザイナーがひとりで決定", "AIがランダムで生成", "コミュニティでの話し合い", "亀の甲羅占い"],
-    correct: 1,
+    correct: 2,
     explanation: "こしきブリュワリーのコミュニティー内には様々な職業の人がいる事に驚きます。デザイナーやイラストレーターも所属しており、ラベルをコミュニティで話し合い決定しています。"
   },
   {
     question: "こしきブリュワリーのプロジェクトが発足したきっかけは？",
     options: ["島の観光協会からの要請", "インターネット上のWeb3コミュニティ", "とあるラジオ番組の一言", "夢からのお告げ"],
-    correct: 2,
+    correct: 1,
     explanation: "web3コミュニティ「カバードピープル」のメンバーから立ち上げたプロジェクトです。"
   },
   {
@@ -104,7 +104,7 @@ function createQuizSlide(quiz, index) {
                     </div>
                 </div>
                 <div class="quiz-content">
-                    <div class="beer-icon">🍺</div>
+                    <div class="icon-content"><img class="beer-icon" src="resources/images/kochiki_b_logo_06_fixol_b.webp"></div>
                     <div class="question">${quiz.question}</div>
                     <div class="options">
                         ${quiz.options.map((option, optIndex) =>
