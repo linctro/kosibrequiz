@@ -43,10 +43,10 @@ const quizData = [
     explanation: "こしきブリュワリーのコミュニティー内には様々な職業の人がいる事に驚きます。デザイナーやイラストレーターも所属しており、ラベルをコミュニティで話し合い決定しています。"
   },
   {
-    question: "こしきブリュワリーのプロジェクトが発足したきっかけは？",
-    options: ["島の観光協会からの要請", "インターネット上のWeb3コミュニティ", "とあるラジオ番組の一言", "夢からのお告げ"],
-    correct: 1,
-    explanation: "web3コミュニティ「カバードピープル」のメンバーから立ち上げたプロジェクトです。"
+    question: "クラフトビールの泡の正体は何？",
+    options: ["メレンゲ", "まぼろし", "炭酸ガス", "カニ怪人の技"],
+    correct: 2,
+    explanation: "クラフトビールの泡は、発酵過程で生成される二酸化炭素が液体中に溶け込み、泡となって現れます。麦芽のたんぱく質などによってコーティングされる事により長持ちしたクリーミーな泡となります"
   },
   {
     question: "こしきブリュワリーのクラフトビールの正しい保管方法は？",
@@ -84,9 +84,6 @@ function generateQuizSlides() {
   quizData.forEach((quiz, index) => {
     const slide = createQuizSlide(quiz, index);
     container.appendChild(slide);
-
-    const resultSlide = createResultSlide(index);
-    container.appendChild(resultSlide);
   });
 }
 
@@ -112,33 +109,6 @@ function createQuizSlide(quiz, index) {
   ).join('')}
                     </div>
                     <button class="confirm-btn" onclick="confirmAnswer(${index})">回答確定</button>
-                </div>
-            `;
-
-  return slide;
-}
-
-// 結果スライド作成
-function createResultSlide(index) {
-  const slide = document.createElement('div');
-  slide.className = 'slide';
-  slide.id = `slide-result-${index}`;
-
-  slide.innerHTML = `
-                <div class="header">
-                    <div class="question-number">問題 ${index + 1} の結果</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${((index + 1) / quizData.length) * 100}%"></div>
-                    </div>
-                </div>
-                <div class="result-content">
-                    <div class="result-icon" id="result-icon-${index}">⭕</div>
-                    <div class="result-text" id="result-text-${index}">正解！</div>
-                    <div class="explanation">${quizData[index].explanation}</div>
-                    ${index === quizData.length - 1 ?
-      '<button class="confirm-btn active" onclick="showCompletionPopup()">結果を見る</button>' :
-      '<div style="color: #666; margin-top: 20px;">下にスワイプして次の問題へ</div>'
-    }
                 </div>
             `;
 
@@ -175,26 +145,52 @@ function confirmAnswer(quizIndex) {
   if (isCorrect) score += 10;
 
   // 結果スライドを更新
-  updateResultSlide(quizIndex, isCorrect);
+  createAndInsertResultSlide(quizIndex, isCorrect);
 
   // 次のスライド（結果画面）へ
-  goToSlide((quizIndex + 1) * 2);
+  goToSlide(currentSlide + 1);
 }
 
-// 結果スライド更新
-function updateResultSlide(quizIndex, isCorrect) {
-  const resultIcon = document.getElementById(`result-icon-${quizIndex}`);
-  const resultText = document.getElementById(`result-text-${quizIndex}`);
-
-  if (isCorrect) {
-    resultIcon.textContent = '⭕';
-    resultText.textContent = '正解！';
-    resultText.className = 'result-text correct';
-  } else {
-    resultIcon.textContent = '❌';
-    resultText.textContent = '不正解';
-    resultText.className = 'result-text incorrect';
-  }
+// 結果スライドを動的生成して挿入
+function createAndInsertResultSlide(quizIndex, isCorrect) {
+    const container = document.getElementById('quizContainer');
+    const currentSlideElement = document.getElementById(`slide-quiz-${quizIndex}`);
+    
+    // 既存の結果スライドがあれば削除
+    const existingResult = document.getElementById(`slide-result-${quizIndex}`);
+    if (existingResult) {
+        existingResult.remove();
+    }
+    
+    // 新しい結果スライドを作成
+    const resultSlide = document.createElement('div');
+    resultSlide.className = 'slide';
+    resultSlide.id = `slide-result-${quizIndex}`;
+    
+    const resultIcon = isCorrect ? '⭕' : '❌';
+    const resultText = isCorrect ? '正解！' : '不正解';
+    const resultClass = isCorrect ? 'correct' : 'incorrect';
+    
+    resultSlide.innerHTML = `
+        <div class="header">
+            <div class="question-number">問題 ${quizIndex + 1} の結果</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: ${((quizIndex + 1) / quizData.length) * 100}%"></div>
+            </div>
+        </div>
+        <div class="result-content">
+            <div class="result-icon">${resultIcon}</div>
+            <div class="result-text ${resultClass}">${resultText}</div>
+            <div class="explanation">${quizData[quizIndex].explanation}</div>
+            ${quizIndex === quizData.length - 1 ? 
+                '<button class="confirm-btn active" onclick="showCompletionPopup()">結果を見る</button>' :
+                '<div style="color: #666; margin-top: 20px;">下にスワイプして次の問題へ</div>'
+            }
+        </div>
+    `;
+    
+    // 現在のクイズスライドの直後に挿入
+    currentSlideElement.insertAdjacentElement('afterend', resultSlide);
 }
 
 // スライド移動
