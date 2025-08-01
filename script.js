@@ -301,7 +301,15 @@ function showCompletionPopup() {
   // バッジ画像を点数に応じて変更
   const badge = getBadgeByScore(score);
   badgeImage.innerHTML = badge.icon;
+  if (badge.isImage) {
+  badgeImage.style.background = 'transparent';
+  badgeImage.style.border = '3px solid #FFD700';
+  badgeImage.style.boxShadow = '0 8px 25px rgba(255, 215, 0, 0.5)';
+} else {
   badgeImage.style.background = badge.color;
+  badgeImage.style.border = 'none';
+  badgeImage.style.boxShadow = '0 8px 25px rgba(255, 215, 0, 0.3)';
+}
 
   popup.style.display = 'flex';
 }
@@ -309,7 +317,9 @@ function showCompletionPopup() {
 // 点数に応じたバッジ取得
 function getBadgeByScore(score) {
   if (score === 100) {
-    return { icon: '🏆', color: 'linear-gradient(135deg, #FFD700, #FFA500)' };
+    return { icon: '<img src="resources/images/IMG_4735.jpeg" alt="完璧な成績バッジ" style="width: 120%; height: 120%; object-fit: cover; border-radius: 8%;">', 
+      color: 'linear-gradient(135deg, #FFD700, #FFA500)',
+      isImage: true };
   } else if (score >= 80) {
     return { icon: '🥈', color: 'linear-gradient(135deg, #C0C0C0, #A0A0A0)' };
   } else if (score >= 60) {
@@ -322,7 +332,8 @@ function getBadgeByScore(score) {
 // X（Twitter）で共有
 function shareToTwitter() {
   const badge = getBadgeByScore(score);
-  let message = `こしきブリュワリー検定（初級）で${score}点を獲得しました！${badge.icon}\n\n`;
+  const iconForShare = badge.isImage ? '🏆' : badge.icon;
+  let message = `こしきブリュワリーのクラフトビール診断（初級）で${score}点を獲得しました！${iconForShare}\n\n`;
 
   if (score === 100) {
     message += '完璧です！こしきブリュワリーマスター🍺';
@@ -334,7 +345,7 @@ function shareToTwitter() {
     message += 'これからこしきブリュワリーのクラフトビールを楽しみましょう！🍻';
   }
 
-  message += '\n\n#こしきブリュワリー #クラフトビール #こしきブリュワリー検定 @vtmapida';
+  message += '\n\n#こしきブリュワリー #クラフトビール #こしブリ検定 https://koshiki-brewery-qize.netlify.app/';
 
   const url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(message);
   window.open(url, '_blank');
