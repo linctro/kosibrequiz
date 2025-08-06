@@ -1,5 +1,6 @@
 // クイズデータ
-const quizData = [
+const quizDataSets = {
+  beginner:[
   {
     question: "こしきブリュワリーがある県はどこ？",
     options: ["北海道", "東京都", "鹿児島県", "兵庫県"],
@@ -60,7 +61,134 @@ const quizData = [
     correct: 1,
     explanation: "こしきブリュワリーのクラフトビールは現在公式ECサイトで購入できます。今後は居酒屋などの飲食店や観光物産店、クラフトビールのイベントからもお届けしていきます。"
   }
-];
+],
+
+intermediate: [
+        {
+            question: "こしきブリュワリーが位置する甑島の特徴は？",
+            options: ["活火山がある", "塩田で有名", "離島である", "スキー場がある"],
+            correct: 2,
+            explanation: "甑島は鹿児島県の離島で、美しい自然環境がこしきブリュワリーのビール作りに活かされています。"
+        },
+        {
+            question: "クラフトビールの「ドライホッピング」とは？",
+            options: ["ホップを乾燥させること", "発酵後にホップを加えること", "ホップを炒ること", "ホップの水分を抜くこと"],
+            correct: 1,
+            explanation: "ドライホッピングは発酵後や熟成中にホップを加える技法で、香りを強化する効果があります。"
+        },
+        {
+            question: "IBU（International Bitterness Units）とは何を表す？",
+            options: ["アルコール度数", "苦味の強さ", "色の濃さ", "香りの強さ"],
+            correct: 1,
+            explanation: "IBUはビールの苦味の強さを数値で表した国際的な基準です。数値が高いほど苦味が強くなります。"
+        },
+        {
+            question: "エールとラガーの主な違いは？",
+            options: ["色の違い", "発酵温度の違い", "アルコール度数の違い", "原料の違い"],
+            correct: 1,
+            explanation: "エールは高温発酵（15-25℃）、ラガーは低温発酵（7-13℃）という発酵温度の違いが最大の特徴です。"
+        },
+        {
+            question: "ベルジャンスタイルビールの特徴は？",
+            options: ["ホップが強い", "酵母由来の複雑な風味", "低アルコール", "色が薄い"],
+            correct: 1,
+            explanation: "ベルジャンスタイルは特別な酵母を使用し、フルーティーでスパイシーな複雑な風味が特徴です。"
+        },
+        {
+            question: "バーレーワインの特徴は？",
+            options: ["低アルコール", "高アルコール", "無色透明", "炭酸なし"],
+            correct: 1,
+            explanation: "バーレーワインは8-12%の高アルコールビールで、ワインのような複雑な味わいが特徴的です。"
+        },
+        {
+            question: "サワービールの酸味の由来は？",
+            options: ["ホップ", "麦芽", "乳酸菌", "炭酸"],
+            correct: 2,
+            explanation: "サワービールの酸味は乳酸菌や野生酵母による発酵から生まれる独特の風味です。"
+        },
+        {
+            question: "セゾンビールの発祥地は？",
+            options: ["ドイツ", "イギリス", "ベルギー", "アメリカ"],
+            correct: 2,
+            explanation: "セゾンビールはベルギー南部のワロン地方で生まれた、農家の季節労働者のためのビールです。"
+        },
+        {
+            question: "ニューイングランドIPAの特徴は？",
+            options: ["透明度が高い", "苦味が強い", "濁りがある", "色が薄い"],
+            correct: 2,
+            explanation: "ニューイングランドIPAは意図的に濁りを残し、ジューシーで苦味を抑えた現代的なIPAスタイルです。"
+        },
+        {
+            question: "こしきブリュワリーのビール作りで重視していることは？",
+            options: ["大量生産", "地域性", "安価な製造", "機械化"],
+            correct: 1,
+            explanation: "こしきブリュワリーは甑島の自然環境と地域性を活かしたクラフトビール作りを重視しています。"
+        }
+    ],
+    
+    advanced: [
+        {
+            question: "甑島の水質がビール作りに与える影響は？",
+            options: ["硬水でミネラル豊富", "軟水で繊細な味", "海水の影響", "pH値が特殊"],
+            correct: 1,
+            explanation: "甑島の軟水は繊細で上品な味わいのビールを作るのに最適で、こしきブリュワリーの特色となっています。"
+        },
+        {
+            question: "クラフトビールの「ブレット」とは何？",
+            options: ["ホップの品種", "麦芽の種類", "野生酵母", "添加物"],
+            correct: 2,
+            explanation: "ブレット（ブレタノマイセス）は野生酵母の一種で、独特のファンキーな風味をビールに与えます。"
+        },
+        {
+            question: "バレルエイジングで使用される樽の種類で最も一般的なのは？",
+            options: ["新品のオーク樽", "ウイスキー樽", "ワイン樽", "日本酒樽"],
+            correct: 1,
+            explanation: "ウイスキー樽は最も一般的で、バニラやカラメルの風味をビールに与える効果があります。"
+        },
+        {
+            question: "アイスビールの製造方法の特徴は？",
+            options: ["氷を加える", "冷凍して濃縮", "氷点下で発酵", "氷で冷却"],
+            correct: 1,
+            explanation: "アイスビールは一部を凍らせて氷を取り除くことで、アルコール度数と風味を濃縮する技法です。"
+        },
+        {
+            question: "ランビックビールの発酵に使用されるのは？",
+            options: ["培養酵母のみ", "野生酵母のみ", "乳酸菌のみ", "野生酵母と乳酸菌"],
+            correct: 3,
+            explanation: "ランビックは野生酵母と乳酸菌による自然発酵で作られる、ベルギーの伝統的なビールです。"
+        },
+        {
+            question: "こしきブリュワリーが目指すビールの哲学は？",
+            options: ["世界基準の味", "島の個性を表現", "大量生産効率", "低価格重視"],
+            correct: 1,
+            explanation: "こしきブリュワリーは甑島の自然と文化を反映した、その土地ならではの個性的なビール作りを哲学としています。"
+        },
+        {
+            question: "グルートビールとは何？",
+            options: ["グルテンフリービール", "ホップを使わないビール", "グルコース入りビール", "発酵しないビール"],
+            correct: 1,
+            explanation: "グルートビールはホップの代わりに香草やスパイスを使用した、中世ヨーロッパの伝統的なビールです。"
+        },
+        {
+            question: "ケトルサワリングとは？",
+            options: ["樽での酸性化", "煮沸釜での酸性化", "発酵中の酸性化", "瓶内での酸性化"],
+            correct: 1,
+            explanation: "ケトルサワリングは煮沸釜で乳酸菌を使って酸味を作る、サワービールの製造技法の一つです。"
+        },
+        {
+            question: "フラッシュペストライゼーションの目的は？",
+            options: ["味の向上", "色の変化", "微生物の除去", "アルコール度数の調整"],
+            correct: 2,
+            explanation: "フラッシュペストライゼーションは短時間の加熱処理で、品質を保ちながら微生物を除去する技術です。"
+        },
+        {
+            question: "甑島テロワールがビールに与える最大の特徴は？",
+            options: ["塩味", "甘味", "ミネラル感", "海風の香り"],
+            correct: 3,
+            explanation: "甑島の海風と自然環境が育む独特のテロワールは、他では味わえない海風の香りをビールに与えます。"
+        }
+    ]
+};
 
 // アプリの状態
 let currentSlide = 0;
@@ -69,11 +197,69 @@ let score = 0;
 let startY = 0;
 let isTransitioning = false;
 
+let currentLevel = 'beginner';
+let quizData = quizDataSets[currentLevel];
+
 // 初期化
 function init() {
   generateQuizSlides();
   setupTouchEvents();
   updateNavButtons();
+}
+
+// 級切り替え機能
+function switchLevel(level) {
+    currentLevel = level;
+    quizData = quizDataSets[level];
+    
+    // ボタンのアクティブ状態を更新
+    document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(level === 'beginner' ? 'beginnerBtn' : 
+                         level === 'intermediate' ? 'intermediateBtn' : 'advancedBtn').classList.add('active');
+    
+    // 背景色とタイトルを更新
+    const startSlide = document.getElementById('slide-start');
+    const subtitle = document.getElementById('levelSubtitle');
+    const title = document.getElementById('levelTitle');
+    
+    startSlide.className = `slide active level-${level}`;
+    
+    const levelInfo = {
+        beginner: {
+            subtitle: 'クラフトビール診断 - 初級編',
+            title: 'こしきブリュワリーのことを<br>もっと知ろう！'
+        },
+        intermediate: {
+            subtitle: 'クラフトビール診断 - 中級編',
+            title: 'こしきブリュワリーの<br>！'
+        },
+        advanced: {
+            subtitle: 'クラフトビール診断 - 上級編',
+            title: 'マスターレベルの<br>専門知識に挑戦！'
+        }
+    };
+    
+    subtitle.textContent = levelInfo[level].subtitle;
+    title.innerHTML = levelInfo[level].title;
+    
+    // ゲーム状態をリセット
+    resetGameState();
+}
+
+// ゲーム状態のリセット
+function resetGameState() {
+    // 既存のクイズスライドを削除
+    const existingSlides = document.querySelectorAll('[id^="slide-quiz-"], [id^="slide-result-"]');
+    existingSlides.forEach(slide => slide.remove());
+    
+    // 状態変数をリセット
+    currentSlide = 0;
+    userAnswers = [];
+    score = 0;
+    
+    // 新しいクイズスライドを生成
+    generateQuizSlides();
+    updateNavButtons();
 }
 
 // クイズスライドを動的生成
@@ -90,7 +276,7 @@ function generateQuizSlides() {
 // クイズスライド作成
 function createQuizSlide(quiz, index) {
   const slide = document.createElement('div');
-  slide.className = 'slide';
+  slide.className = `slide level-${currentLevel}`;
   slide.id = `slide-quiz-${index}`;
 
   slide.innerHTML = `
@@ -164,7 +350,7 @@ function createAndInsertResultSlide(quizIndex, isCorrect) {
     
     // 新しい結果スライドを作成
     const resultSlide = document.createElement('div');
-    resultSlide.className = 'slide';
+    resultSlide.className = `slide level-${currentLevel}`;
     resultSlide.id = `slide-result-${quizIndex}`;
     
     const resultIcon = isCorrect ? '⭕' : '❌';
@@ -316,24 +502,40 @@ function showCompletionPopup() {
 
 // 点数に応じたバッジ取得
 function getBadgeByScore(score) {
-  if (score === 100) {
-    return { icon: '<img src="resources/images/IMG_4735.jpeg" alt="完璧な成績バッジ" style="width: 120%; height: 120%; object-fit: cover; border-radius: 8%;">', 
-      color: 'linear-gradient(135deg, #FFD700, #FFA500)',
-      isImage: true };
-  } else if (score >= 80) {
-    return { icon: '🥈', color: 'linear-gradient(135deg, #C0C0C0, #A0A0A0)' };
-  } else if (score >= 60) {
-    return { icon: '🥉', color: 'linear-gradient(135deg, #CD7F32, #B8860B)' };
-  } else {
-    return { icon: '📜', color: 'linear-gradient(135deg, #DDD, #BBB)' };
-  }
+  const badges = {
+        beginner: {
+            100: { icon: '<img src="resources/images/IMG_4735.jpeg" alt="初級完璧バッジ" style="width: 150%; height: 150%; object-fit: cover; border-radius: 8%;">', color: 'linear-gradient(135deg, #FFD700, #FFA500)', isImage: true },
+     80: { icon: '🥈', color: 'linear-gradient(135deg, #C0C0C0, #A0A0A0)', isImage: false },
+            60: { icon: '🥉', color: 'linear-gradient(135deg, #CD7F32, #B8860B)', isImage: false },
+            default: { icon: '📜', color: 'linear-gradient(135deg, #DDD, #BBB)', isImage: false }
+        },
+        intermediate: {
+            100: { icon: '💎', color: 'linear-gradient(135deg, #4169E1, #0000CD)', isImage: false },
+            80: { icon: '⭐', color: 'linear-gradient(135deg, #1E90FF, #4682B4)', isImage: false },
+            60: { icon: '🔷', color: 'linear-gradient(135deg, #87CEEB, #4682B4)', isImage: false },
+            default: { icon: '📘', color: 'linear-gradient(135deg, #B0C4DE, #708090)', isImage: false }
+        },
+        advanced: {
+            100: { icon: '👑', color: 'linear-gradient(135deg, #8B4513, #4A2C2A)', isImage: false },
+            80: { icon: '🏅', color: 'linear-gradient(135deg, #A0522D, #8B4513)', isImage: false },
+            60: { icon: '🥇', color: 'linear-gradient(135deg, #CD853F, #A0522D)', isImage: false },
+            default: { icon: '📙', color: 'linear-gradient(135deg, #DEB887, #BC9A6A)', isImage: false }
+        }
+    };
+
+     const levelBadges = badges[currentLevel];
+    
+    if (score === 100) return levelBadges[100];
+    if (score >= 80) return levelBadges[80];
+    if (score >= 60) return levelBadges[60];
+    return levelBadges.default;
 }
 
 // X（Twitter）で共有
 function shareToTwitter() {
   const badge = getBadgeByScore(score);
   const iconForShare = badge.isImage ? '🏆' : badge.icon;
-  let message = `こしきブリュワリーのクラフトビール診断（初級）で${score}点を獲得しました！${iconForShare}\n\n`;
+  let message = `こしきブリュワリー検定${level}で${score}点を獲得しました！${iconForShare}\n\n`;
 
   if (score === 100) {
     message += '完璧です！こしきブリュワリーマスター🍺';
