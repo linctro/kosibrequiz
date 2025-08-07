@@ -47,11 +47,11 @@
         <div class="slide active" id="slide-start">
           <div class="header">
             <div class="question-number">こしきブリュワリー</div>
-            <div style="font-size: 14px; color: #666;">こしきブリュワリー検定 - 初級編</div>
+            <div style="font-size: 14px; color: #666;" id="levelSubtitle">こしきブリュワリー検定 - 初級編</div>
           </div>
           <div class="quiz-content">
             <div class="icon-content"><img class="beer-icon" src="resources/images/kochiki_b_logo_06_fixol_b.webp"></div>
-            <div class="question">こしきブリュワリーのことを<br>もっと知ろう！</div>
+            <div class="question" id="levelTitle">こしきブリュワリーのことを<br>もっと知ろう！</div>
             <div style="text-align: center; color: #666; margin-bottom: 20px;">
               全10問 / 各10点 / 制限時間なし
             </div>
@@ -59,6 +59,21 @@
           </div>
         </div>
 
+         <!-- 級選択ボタン -->
+    <div class="level-selector">
+        <button class="level-btn active" onclick="switchLevel('beginner')" id="beginnerBtn">
+            <span>初</span>
+            <span>級</span>
+        </button>
+        <button class="level-btn" onclick="*switchLevel('intermediate')" id="intermediateBtn">
+            <span>中</span>
+            <span>級</span>
+        </button>
+        <button class="level-btn" onclick="*switchLevel('advanced')" id="advancedBtn">
+            <span>上</span>
+            <span>級</span>
+        </button>
+    </div>
         <!-- クイズスライドは動的に生成 -->
       </div>
     </div>
