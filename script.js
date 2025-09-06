@@ -74,13 +74,13 @@ const quizDataSets = {
       question: "初期作「フロムスクラッチ」の製法スタイルはどれ？",
       options: ["ラガー", "エルモ", "エール", "ジャガー"],
       correct: 2,
-      explanation: "フロムスクラッチはイギリスの伝統的なエールスタイルで、ホップの苦味と麦芽の甘味がバランスよく調和した飲みやすいビールです"
+      explanation: "フロムスクラッチはイギリスの伝統的なエールスタイルで、ホップの苦味と麦芽の甘味で滑らかな飲み口です"
     },
     {
       question: "エール製法で出来上がるクラフトビールの特徴はどれ？",
       options: ["フルーティで豊かな香りと味わい", "キレのあるすっきりした味わい", "ごくごく喉越しを楽しむ", "麦芽やホップが際立つシンプルな味わい"],
       correct: 0,
-      explanation: "エールは上面発酵酵母を使用し、比較的高温で発酵させるため、フルーティで豊かな香りと味わいが特徴です"
+      explanation: "エールは上面発酵酵母を使用し、比較的高温で発酵させるため、フルーティで豊かな香りと発行による芳醇な味わいが特徴です"
     },
 
     {
@@ -96,7 +96,7 @@ const quizDataSets = {
       explanation: "いままでNFTを軸としたイベントやハロウィン祭りを薩摩川内市で開催してきました。これにより、デジタルコミュニティとリアル地域コミュニティが繋がる可能性を示してきました"
     },
     {
-      question: "NFTを活用して離島にビール工房を創るプロジェクトの正式名称はどれ？",
+      question: "NFTを活用して離島にビール工房を創るプロジェクトの正式名称は？",
       options: ["離島ビール工房をデジタル所有証明の仕組みでプラモみたいに創るプロジェクト", "ツンデレ悪役令嬢に島流しにされて原住民とビール工房を建ててみた", "こちら薩摩川内市離島甑島ビール工房", "愛のままに麦芽のままに僕はビール工房を傷つけない"],
       correct: 0,
       explanation: "カバードピープルコミュニティのメンバーで考えたユニークでNFTの説明も兼ねた名称です"
@@ -123,7 +123,7 @@ const quizDataSets = {
       question: "こしきブリュワリーが現時点でラベルに記載しているアルコール飲料の種類は？",
       options: ["ハイボール", "発泡酒", "こどもビール", "第３のビール"],
       correct: 1,
-      explanation: "2025年6月30日に取得した酒類製造免許により「発泡酒」を記載していますが、製造過程もアルコール度数も味もビールと遜色ありません"
+      explanation: "2025年6月30日に取得した酒類製造免許により「発泡酒」を記載しています。山菜や香辛料、ハーブなどなど多様な素材を使えるのが発泡酒の特徴です"
     }
   ],
 
@@ -511,7 +511,7 @@ function getBadgeByScore(score) {
       default: { icon: '📜', color: 'linear-gradient(135deg, #DDD, #BBB)', isImage: false }
     },
     intermediate: {
-      100: { icon: '💎', color: 'linear-gradient(135deg, #4169E1, #0000CD)', isImage: false },
+      100: { icon: '<img src="resources/images/certificateintermediate.png" alt="初級完璧バッジ" style="width: 150%; height: 150%; object-fit: cover; border-radius: 8%;">', color: 'linear-gradient(135deg, #4169E1, #0000CD)', isImage: false },
       80: { icon: '⭐', color: 'linear-gradient(135deg, #1E90FF, #4682B4)', isImage: false },
       60: { icon: '🔷', color: 'linear-gradient(135deg, #87CEEB, #4682B4)', isImage: false },
       default: { icon: '📘', color: 'linear-gradient(135deg, #B0C4DE, #708090)', isImage: false }

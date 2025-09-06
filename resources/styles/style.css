@@ -146,7 +146,7 @@ transform: translateY(100%);
 .icon-content{
   display: flex;
   justify-content: center;
-  margin-top: 15%; /* ヘッダーとアイコンの間のスペースを調整 */
+  margin-top: 10%; /* ヘッダーとアイコンの間のスペースを調整 */
   margin-bottom: 5px;
 }
 
@@ -280,7 +280,7 @@ transform: translateY(100%);
 }
 
 .slide.level-intermediate {
-    background: linear-gradient(135deg, #667eea 0%, #1e3c72 100%);
+    background: linear-gradient(135deg, #2a93d5 0%, #3ddad7 55%, #135589 100%);
 }
 
 .slide.level-advanced {
@@ -326,7 +326,7 @@ transform: translateY(100%);
 /* フッター */
 .footer {
   background: linear-gradient(0deg, #757575 0%, #9E9E9E 45%, #E8E8E8 70%, #9E9E9E 85%, #757575 90% 100%);
-  padding: 15px 0;
+  padding: 8px 0;
   display: flex;
   justify-content: center;
   gap: 30px;
@@ -338,8 +338,8 @@ transform: translateY(100%);
 }
 
 .footer-icon {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   display: flex;
