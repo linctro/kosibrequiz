@@ -473,6 +473,11 @@ function handleTouchEnd(e) {
   startY = 0;
 }
 
+console.log('Score:', score);
+console.log('Level:', level);
+console.log('Message:', message);
+console.log('URL:', url);
+
 // 完了ポップアップ表示
 function showCompletionPopup() {
   const popup = document.getElementById('completionPopup');
