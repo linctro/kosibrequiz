@@ -536,7 +536,16 @@ function getBadgeByScore(score) {
 function shareToTwitter() {
   const badge = getBadgeByScore(score);
   const iconForShare = badge.isImage ? '🏆' : badge.icon;
-  let message = `こしきブリュワリー検定${level}で${score}点を獲得しました！${iconForShare}\n\n`;
+
+// レベル名を日本語に変換
+  const levelNames = {
+    'beginner': '初級編',
+    'intermediate': '中級編', 
+    'advanced': '上級編'
+  };
+  const levelName = levelNames[currentLevel] || currentLevel;
+
+  let message = `こしきブリュワリー検定${levelName}で${score}点を獲得しました！${iconForShare}\n\n`;
 
   if (score === 100) {
     message += '完璧です！こしきブリュワリーマスター🍺';
