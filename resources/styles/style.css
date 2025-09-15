@@ -160,7 +160,7 @@ transform: translateY(100%);
 .options {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
 .option {
