@@ -146,7 +146,7 @@ transform: translateY(100%);
 .icon-content{
   display: flex;
   justify-content: center;
-  margin-top: 10%; /* ヘッダーとアイコンの間のスペースを調整 */
+  margin-top: 8%; /* ヘッダーとアイコンの間のスペースを調整 */
   margin-bottom: 5px;
 }
 
