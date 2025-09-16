@@ -511,7 +511,7 @@ function getBadgeByScore(score) {
       default: { icon: '📜', color: 'linear-gradient(135deg, #DDD, #BBB)', isImage: false }
     },
     intermediate: {
-      100: { icon: '<img src="resources/images/certificateintermediate.png" alt="初級完璧バッジ" style="width: 150%; height: 150%; object-fit: cover; border-radius: 8%;">', color: 'linear-gradient(135deg, #4169E1, #0000CD)', isImage: false },
+      100: { icon: '<img src="resources/images/certificateintermediate.png" alt="中級完璧バッジ" style="width: 150%; height: 150%; object-fit: cover; border-radius: 8%;">', color: 'linear-gradient(135deg, #4169E1, #0000CD)', isImage: true },
       80: { icon: '⭐', color: 'linear-gradient(135deg, #1E90FF, #4682B4)', isImage: false },
       60: { icon: '🔷', color: 'linear-gradient(135deg, #87CEEB, #4682B4)', isImage: false },
       default: { icon: '📘', color: 'linear-gradient(135deg, #B0C4DE, #708090)', isImage: false }
@@ -537,10 +537,10 @@ function shareToTwitter() {
   const badge = getBadgeByScore(score);
   const iconForShare = badge.isImage ? '🏆' : badge.icon;
 
-// レベル名を日本語に変換
+  // レベル名を日本語に変換
   const levelNames = {
     'beginner': '初級編',
-    'intermediate': '中級編', 
+    'intermediate': '中級編',
     'advanced': '上級編'
   };
   const levelName = levelNames[currentLevel] || currentLevel;
